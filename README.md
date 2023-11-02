@@ -1,18 +1,34 @@
 # create-react-scaffold
 
-> A simple React scaffolding tool.
+创建 `React` 应用程序模板，支持 `create-react-app` 和 `vite` 构建工具
 
-## Usage
+## 安装
 
-```bash
-npx create-react-scaffold <project-name>
+```
+npm install create-react-scaffold
 ```
 
-## Features
+## 使用
 
-- [x] TypeScript
-- [x] ESLint
-- [x] Prettier
-- [x] Husky
-- [x] Jest
-- [x] Storybook
+```js
+// 导入库
+import { createReactScaffold } from "create-react-scaffold";
+
+// 创建应用
+const app = await createReactScaffold({
+  /** options */
+});
+```
+
+## 查找规则
+
+假设 URL 为 `https://example.com/path/to/app`，则路由查找规则为：
+
+- 查找本地 `./pages/path/to/app/index.js[x]` 文件，该文件的默认导出为页面组件
+
+## 约定
+
+1. 约定 `pages` 为页面组件的目录名
+2. 约定 `/path/to/app` 为路由路径
+3. 约定 `./pages/path/to/app/index.js[x]` 为页面组件文件
+4. 约定 `./pages/path/to/app/data.js[x]` 为数据文件
