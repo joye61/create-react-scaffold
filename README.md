@@ -32,3 +32,5 @@ const app = await createReactScaffold({
 2. 约定 `/path/to/app` 为路由路径
 3. 约定 `./pages/path/to/app/index.js[x]` 为页面组件文件
 4. 约定 `./pages/path/to/app/data.js[x]` 为数据文件
+5. 约定 `@` 作为 `src` 目录别名
+6. 约定 `src` 目录为源码目录（需要在构建工具中配置）
