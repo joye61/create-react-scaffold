@@ -39,12 +39,12 @@ export class ViteApp extends Resolver {
     let page: React.ReactNode | null = null;
 
     // 开始加载页面
-    await this.log(async () => {
+    try {
       const pageModule = await pageLoader();
       if (pageModule.default) {
         page = <pageModule.default />;
       }
-    });
+    } catch (error) {}
 
     // 如果页面不存在，调用onNotFound
     if (!page) {
@@ -63,12 +63,12 @@ export class ViteApp extends Resolver {
       this.preloadModules[`/src/pages/${pathname}/data.jsx`];
 
     if (dataLoader) {
-      await this.log(async () => {
+      try {
         const dataModule = await dataLoader();
         if (typeof dataModule.default === "function") {
           await dataModule.default();
         }
-      });
+      } catch (error) {}
     }
 
     // 渲染页面

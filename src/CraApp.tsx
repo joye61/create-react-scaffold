@@ -25,12 +25,13 @@ export class CraApp extends Resolver {
     let page: React.ReactNode | null = null;
 
     // 查找页面
-    await this.log(async () => {
+    try {
+    } catch (error) {
       let pageModule = await import(`@/pages/${pathname}/index.jsx`);
       if (pageModule.default) {
         page = <pageModule.default />;
       }
-    });
+    }
 
     // 如果页面不存在，调用onNotFound
     if (!page) {
@@ -44,12 +45,12 @@ export class CraApp extends Resolver {
     }
 
     // 只有页面确认存在才加载页面数据
-    await this.log(async () => {
+    try {
       let dataModule = await import(`@/pages/${pathname}/data.js`);
       if (typeof dataModule.default === "function") {
         await dataModule.default();
       }
-    });
+    } catch (error) {}
 
     // 渲染页面
     this.render(page);

@@ -4,8 +4,6 @@ import type { CRSOption } from "./types";
 export abstract class Resolver {
   // 挂载容器对象
   container: HTMLElement;
-  // 构建工具
-  buildTool: "vite" | "create-react-app";
 
   /**
    * 构造函数
@@ -27,7 +25,6 @@ export abstract class Resolver {
     }
 
     this.container = container;
-    this.buildTool = option.buildTool!;
   }
 
   /**
@@ -46,24 +43,6 @@ export abstract class Resolver {
    */
   render(content: React.ReactNode) {
     ReactDOM.createRoot(this.container).render(content);
-  }
-
-  /**
-   * 记录日志
-   * @param callback
-   */
-  async log(callback: () => Promise<void>) {
-    try {
-      await callback();
-    } catch (error) {
-      if (
-        (this.buildTool === "create-react-app" &&
-          process.env.NODE_ENV !== "production") ||
-        (this.buildTool === "vite" && !(import.meta as any).env.PROD)
-      ) {
-        console.error(error);
-      }
-    }
   }
 
   /**
