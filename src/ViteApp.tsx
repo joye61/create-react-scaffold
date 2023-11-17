@@ -30,7 +30,7 @@ export class ViteApp extends Resolver {
     }
 
     // 首先查找页面是否存在，如果不存在，调用onNotFound
-    const pageLoader = this.preloadModules[`@/pages/${pathname}/index.jsx`];
+    const pageLoader = this.preloadModules[`/src/pages/${pathname}/index.jsx`];
     if (!pageLoader) {
       this.render(await this.option.onNotFound?.());
       return;
@@ -59,8 +59,8 @@ export class ViteApp extends Resolver {
 
     // 只有页面确认存在才加载页面数据
     const dataLoader =
-      this.preloadModules[`@/pages/${pathname}/data.js`] ||
-      this.preloadModules[`@/pages/${pathname}/data.jsx`];
+      this.preloadModules[`/src/pages/${pathname}/data.js`] ||
+      this.preloadModules[`/src/pages/${pathname}/data.jsx`];
 
     if (dataLoader) {
       await this.log(async () => {
