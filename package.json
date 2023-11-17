@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc",
-    "dev": "tsc -w"
+    "dev": "tsc -w",
+    "build": "rm -rf dist && tsc"
   },
   "repository": {
     "type": "git",

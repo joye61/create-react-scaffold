@@ -46,13 +46,15 @@ export class CraApp extends Resolver {
     // 只有页面确认存在才加载页面数据
     await this.log(async () => {
       let dataModule = await import(`@/pages/${pathname}/data.js`);
-      await dataModule.default?.();
+      if (typeof dataModule.default === "function") {
+        await dataModule.default();
+      }
     });
 
     // 渲染页面
     this.render(page);
 
     // 结束回调
-    this.option.onFindEnd?.();
+    this.option.onLoaded?.();
   }
 }

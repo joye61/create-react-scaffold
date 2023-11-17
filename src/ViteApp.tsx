@@ -65,7 +65,9 @@ export class ViteApp extends Resolver {
     if (dataLoader) {
       await this.log(async () => {
         const dataModule = await dataLoader();
-        await dataModule.default?.();
+        if (typeof dataModule.default === "function") {
+          await dataModule.default();
+        }
       });
     }
 
@@ -73,6 +75,6 @@ export class ViteApp extends Resolver {
     this.render(page);
 
     // 结束回调
-    this.option.onFindEnd?.();
+    this.option.onLoaded?.();
   }
 }

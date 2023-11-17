@@ -17,8 +17,8 @@ export interface CRSOption {
   onLoading?: () => ReactNodeResult;
   // 找到页面触发
   onFind?: (content?: React.ReactNode) => ReactNodeResult;
-  // 找到页面结束时触发
-  onFindEnd?: () => void | Promise<void>;
+  // 页面渲染结束时触发
+  onLoaded?: () => void | Promise<void>;
   // 页面未找到时触发
   onNotFound?: () => ReactNodeResult;
 }
