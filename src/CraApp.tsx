@@ -26,12 +26,11 @@ export class CraApp extends Resolver {
 
     // 查找页面
     try {
-    } catch (error) {
       let pageModule = await import(`@/pages/${pathname}/index.jsx`);
       if (pageModule.default) {
         page = <pageModule.default />;
       }
-    }
+    } catch (error) {}
 
     // 如果页面不存在，调用onNotFound
     if (!page) {
