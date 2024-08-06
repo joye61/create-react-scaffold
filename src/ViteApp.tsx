@@ -3,14 +3,14 @@ import type { CRSOption } from "./types";
 import { Resolver } from "./Resolver";
 
 export class ViteApp extends Resolver {
-  preloadModules: Record<string, () => Promise<any>>;
+  modules: Record<string, () => Promise<any>>;
 
   constructor(public option: CRSOption) {
     super(option);
 
-    this.preloadModules = (import.meta as any).glob([
-      "@/pages/**/index.jsx",
-      "@/pages/**/data.js?(x)",
+    this.modules = (import.meta as any).glob([
+      "@/pages/**/index.[jt]sx",
+      "@/pages/**/data.[jt]s?(x)",
     ]);
   }
 
@@ -43,7 +43,9 @@ export class ViteApp extends Resolver {
     };
 
     // 首先查找页面是否存在，如果不存在，调用onNotFound
-    const pageLoader = this.preloadModules[`/src/pages/${pathname}/index.jsx`];
+    const pageLoader =
+      this.modules[`/src/pages/${pathname}/index.jsx`] ||
+      this.modules[`/src/pages/${pathname}/index.tsx`];
     if (!pageLoader) {
       await renderNotFound();
       return;
@@ -75,8 +77,10 @@ export class ViteApp extends Resolver {
 
     // 只有页面确认存在才加载页面数据
     const dataLoader =
-      this.preloadModules[`/src/pages/${pathname}/data.js`] ||
-      this.preloadModules[`/src/pages/${pathname}/data.jsx`];
+      this.modules[`/src/pages/${pathname}/data.js`] ||
+      this.modules[`/src/pages/${pathname}/data.jsx`] ||
+      this.modules[`/src/pages/${pathname}/data.ts`] ||
+      this.modules[`/src/pages/${pathname}/data.tsx`];
 
     if (dataLoader) {
       try {
