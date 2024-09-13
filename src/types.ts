@@ -20,5 +20,5 @@ export interface CRSOption {
   // 页面未找到时触发
   onNotFound?: () => ReactNodeResult;
   // 页面路由变化时触发，初始化也会触发一次
-  onChange?: (pathname?: string) => void | Promise<void>;
+  onChange?: (pathname?: string) => string | Promise<string>;
 }

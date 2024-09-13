@@ -1,7 +1,6 @@
 import { Navigation } from "./Navigation";
 import { Resolver } from "./Resolver";
 import { ViteApp } from "./ViteApp";
-import ReactDOM from "react-dom/client";
 import type { CRSOption } from "./types";
 
 /**
@@ -38,8 +37,8 @@ export async function createReactScaffold(option?: CRSOption) {
 
   // 开始路由
   const onPathChange = async (pathname: string) => {
-    await config.onChange?.(pathname);
-    await resolver.setPageContent(pathname);
+    const finalPath = await config.onChange?.(pathname);
+    await resolver.setPageContent(finalPath ?? pathname);
   };
 
   // 监听历史数据变化
