@@ -61,6 +61,7 @@ export class ViteApp extends Resolver {
       }
     } catch (error) {
       this.logError(error);
+      return;
     }
 
     // 如果页面不存在，调用onNotFound
