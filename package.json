@@ -1,7 +1,7 @@
 {
   "name": "create-react-scaffold",
   "description": "创建 `React` 应用程序模板，支持 `vite` 构建工具",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "tsc -w",
@@ -26,15 +26,14 @@
     "url": "https://github.com/joye61/create-react-scaffold/issues"
   },
   "homepage": "https://github.com/joye61/create-react-scaffold#readme",
-  "devDependencies": {
-    "@types/node": "^20.9.0",
-    "@types/react": "^18.2.34",
-    "@types/react-dom": "^18.2.14",
-    "typescript": "^5.2.2"
-  },
   "dependencies": {
     "history": "^5.3.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "typescript": "^5.8.3"
   }
 }

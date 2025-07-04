@@ -1,19 +1,13 @@
-import { Navigation } from "./Navigation";
-import { Resolver } from "./Resolver";
 import { ViteApp } from "./ViteApp";
-import type { CRSOption } from "./types";
-
-/**
- * 初始化Navigation对象
- */
-export const navigation = new Navigation();
+import type { CreateReactScaffoldOption } from "./types";
+import { getHistory } from "./history";
 
 /**
  * 创建一个react项目的脚手架
  * @param option
  */
-export async function createReactScaffold(option?: CRSOption) {
-  let config: CRSOption = {
+export async function createReactScaffold(option?: CreateReactScaffoldOption) {
+  let config: CreateReactScaffoldOption = {
     root: "#root",
     mode: "browser",
     entry: "home",
@@ -27,25 +21,22 @@ export async function createReactScaffold(option?: CRSOption) {
   }
 
   // 创建历史记录实例
-  const history = navigation.getHistory(config.mode);
+  const history = getHistory(config.mode);
 
   // 应用启动事件
   await config.onStart?.();
 
   // 创建解析程序
-  const resolver: Resolver = new ViteApp(config);
-
-  // 开始路由
-  const onPathChange = async (pathname: string) => {
-    const finalPath = await config.onChange?.(pathname);
-    await resolver.setPageContent(finalPath ?? pathname);
-  };
+  const resolver = new ViteApp(config);
 
   // 监听历史数据变化
   history.listen(({ location }) => {
-    onPathChange(location.pathname);
+    resolver.setPageContent(location.pathname);
   });
 
   // 页面初始化需要渲染一次
-  await onPathChange(history.location.pathname);
+  await resolver.setPageContent(history.location.pathname);
 }
+
+// 重新导出
+export { getHistory, goto } from "./history";
