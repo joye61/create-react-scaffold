@@ -1,7 +1,7 @@
 {
   "name": "create-react-scaffold",
   "description": "创建 `React` 应用程序模板，支持 `vite` 构建工具",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "tsc -w",

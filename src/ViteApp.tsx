@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import type { CreateReactScaffoldOption, PathInfo } from "./types";
 import { normalize } from "./utils";
+import { navInfo } from "./history";
 
 export class ViteApp {
   private modules: Record<string, () => Promise<any>>;
@@ -128,8 +129,7 @@ export class ViteApp {
     const origin = pathname;
 
     // 如果页面存在基础路径，先移除基础路径
-    let base = (import.meta as any).env.BASE_URL || "/";
-    base = normalize(base);
+    let base = normalize(navInfo.baseUrl);
     pathname = normalize(pathname);
     if (base && pathname.startsWith(base)) {
       pathname = pathname.slice(base.length);

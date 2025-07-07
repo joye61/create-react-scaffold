@@ -1,12 +1,15 @@
 import {
-  type History,
   createBrowserHistory,
   createHashHistory,
   createMemoryHistory,
 } from "history";
-import { HistoryMode, NavigationType } from "./types";
+import { HistoryMode, NavigationInfo, NavigationType } from "./types";
+import { normalize } from "./utils";
 
-let _history: History | undefined;
+export const navInfo: NavigationInfo = {
+  baseUrl: "/",
+  history: undefined,
+};
 
 /**
  * 获取历史记录对象，如果没有，就创建
@@ -14,20 +17,20 @@ let _history: History | undefined;
  * @returns History
  */
 export function getHistory(mode: HistoryMode = "browser") {
-  if (_history) {
-    return _history;
+  if (navInfo.history) {
+    return navInfo.history;
   }
 
   if (mode === "browser") {
-    _history = createBrowserHistory();
+    navInfo.history = createBrowserHistory();
   } else if (mode === "hash") {
-    _history = createHashHistory();
+    navInfo.history = createHashHistory();
   } else if (mode === "memory") {
-    _history = createMemoryHistory();
+    navInfo.history = createMemoryHistory();
   } else {
     throw new Error(`Unknown history type: ${mode}`);
   }
-  return _history;
+  return navInfo.history;
 }
 
 /**
@@ -41,9 +44,13 @@ export function goto(
   params?: Record<string, any>,
   type: NavigationType = "push"
 ) {
-  if (!_history) return;
-  let url = path || "/";
-  let base = (import.meta as any).env.BASE_URL || "/";
+  if (!navInfo.history) return;
+  let url = normalize(path || "/");
+  if (!url) {
+    url = navInfo.baseUrl;
+  } else {
+    url = navInfo.baseUrl + "/" + url;
+  }
 
   const search = new URLSearchParams(params ?? undefined);
   if (/\?/.test(url)) {
@@ -51,5 +58,5 @@ export function goto(
   } else {
     url += "?" + search.toString();
   }
-  _history[type](url);
+  navInfo.history[type](url);
 }

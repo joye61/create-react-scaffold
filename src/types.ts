@@ -1,15 +1,22 @@
+import { type History } from "history";
+
 export type HistoryMode = "browser" | "hash" | "memory";
 
 export type NavigationType = "push" | "replace";
 
 export type ReactNodeResult = React.ReactNode | Promise<React.ReactNode>;
 
+export interface NavigationInfo {
+  baseUrl: string;
+  history: History | undefined;
+}
+
 export type PathInfo = {
   // 原始路径，没有过滤base路径
   origin: string;
   // 真实路径，过滤了base路径
   real: string;
-  // 移除前后反斜杠后的路径
+  // 移除左右两边空白
   trim: string;
 };
 
@@ -21,7 +28,7 @@ export interface CreateReactScaffoldOption {
   // 默认页面
   entry?: string;
   // 页面基础路径，如果设置了，会从路由路径中删除
-  base?: string;
+  baseUrl?: string;
   // 应用启动时触发，最先触发的回调
   onStart?: () => void | Promise<void>;
   // 开始加载页面时触发，在数据加载之前

@@ -1,6 +1,7 @@
 import { ViteApp } from "./ViteApp";
 import type { CreateReactScaffoldOption } from "./types";
-import { getHistory } from "./history";
+import { getHistory, navInfo } from "./history";
+import { normalize } from "./utils";
 
 /**
  * 创建一个react项目的脚手架
@@ -18,6 +19,14 @@ export async function createReactScaffold(option?: CreateReactScaffoldOption) {
       ...config,
       ...option,
     };
+  }
+
+  // 设置baseUrl
+  if (config.baseUrl) {
+    if (!config.baseUrl.startsWith("/")) {
+      throw new Error(`baseUrl must start with /`);
+    }
+    navInfo.baseUrl = "/" + normalize(config.baseUrl);
   }
 
   // 创建历史记录实例
