@@ -49,7 +49,7 @@ export function goto(
   if (!url) {
     url = navInfo.baseUrl;
   } else {
-    url = navInfo.baseUrl + "/" + url;
+    url = normalize(navInfo.baseUrl, "right") + "/" + url;
   }
 
   const search = new URLSearchParams(params ?? undefined);
